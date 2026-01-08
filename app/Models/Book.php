@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Product extends Model
+class Book extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'store_id', 'name', 'description', 'price'
+        'members_id', 'title', 'author', 'isbn','publication_year','copies_available'
     ];
 
-    public function store()
+    public function member()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Member::class);
     }
 }

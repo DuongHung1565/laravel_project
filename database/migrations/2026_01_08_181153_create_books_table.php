@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('store_id')
-                ->constrained('stores')
+        
+            $table->foreignId('members_id')
+                ->constrained('members')
                 ->onDelete('cascade');
+            $table->string('title', 100);
+            $table->string('author', 100);
+            $table->string('isbn', 100)->unique();
+            $table->integer('publication_year');
+            $table->integer('copies_available')->default(0);
 
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->decimal('price', 10, 2);
+
+
             $table->timestamps();
         });
     }
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('books');
     }
 };

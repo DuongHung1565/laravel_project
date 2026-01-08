@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="utf-8">
-    <title>Quản lý sản phẩm</title>
+    <title>Quản lý thư viện</title>
 
     <!-- Bootstrap & Icon -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -46,17 +46,17 @@
 
         <!-- TITLE + BUTTON -->
         <div class="table-title d-flex justify-content-between align-items-center">
-            <h2>Quản lý <b>Sản phẩm</b></h2>
+            <h2>Quản lý <b>thư viện</b></h2>
 
                 <!-- <form method="GET" class="mr-2">
                     <input type="text" name="search"
                         class="form-control"
-                        placeholder="Search by room or guest"
+                        placeholder="Search by products or store"
                         value="{{ request('search') }}">
                 </form> -->
 
-            <a href="{{ route('products.create') }}" class="btn btn-success">
-                <i class="material-icons">&#xE147;</i> Thêm sản phẩm
+            <a href="{{ route('books.create') }}" class="btn btn-success">
+                <i class="material-icons">&#xE147;</i> Thêm sách
             </a>
         </div>
 
@@ -71,33 +71,35 @@
         <table class="table table-striped table-hover mt-3">
             <thead>
                 <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Mô tả</th>
-                    <th>Giá</th>
-                    <th>Cửa hàng</th>
-                    <th>Ngày tạo</th>
+                    <th>mã thành viên</th>
+                    <th>tiêu đề</th>
+                    <th>author</th>
+                    <th>isbn</th>
+                    <th>Năm phát hành</th> 
+                    <th>copies_available</th>
                     <th width="120">Hành động</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($products as $product)
+                @foreach($books as $book)
                 <tr>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->description }}</td>
-                    <td>{{ number_format($product->price, 0) }} đ</td>
-                    <td>{{ $product->store->name }}</td>
-                    <td>{{ $product->created_at->format('d/m/Y') }}</td>
-
+                    <td>{{ $book->members_id }}</td>
+                    <td>{{ $book->title }}</td>
+                    <td>{{ $book->author }}</td>
+                    <td>{{ $book->isbn }}</td>
+                    <td>{{ $book->publication_year }}</td>
+                    <td>{{ $book->copies_available }}</td>
+                    <td>{{ $book->created_at->format('d/m/Y') }}</td>
                     <td>
-                        <a href="{{ route('products.edit', $product->id) }}" class="edit">
+                        <a href="{{ route('books.edit', $book->id) }}" class="edit">
                             <i class="material-icons" title="Edit">&#xE254;</i>
                         </a>
 
-                        <form action="{{ route('products.destroy', $product->id) }}"
+                        <form action="{{ route('books.destroy', $book->id) }}"
                               method="POST" style="display:inline">
                             @csrf
                             @method('DELETE')
-                            <button onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')"
+                            <button onclick="return confirm('Bạn có chắc muốn xóa sách này?')"
                                     style="border:none;background:none">
                                 <i class="material-icons delete" title="Delete">&#xE872;</i>
                             </button>
@@ -110,7 +112,7 @@
 
         <!-- PAGINATION -->
         <div class="d-flex justify-content-end">
-            {{ $products->links() }}
+            {{ $books->links() }}
         </div>
 
     </div>
